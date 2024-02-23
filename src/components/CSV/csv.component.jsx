@@ -1,13 +1,29 @@
-
+import { useState } from "react"
+import Papa from 'papaparse'
+import { MDBDataTable } from 'mdbreact';
 
 
 const CSVUpload =()=>{
+
+  const [data, setData] = useState([]);
+
+
+  const handleFileUpload = (e)=>{
+    const file = e.target.files[0];
+    Papa.parse(file, {
+      header: true,
+      complete: (results) =>{
+        setData(results.data);
+      }
+    })
+  }
+
   return(
     <div className="">
       <div className="mt-2 row w-70 mx-auto">
 
               <div className="col">
-              <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload"/>
+              <input type="file" accept=".CSV" onChange={handleFileUpload} class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload"/>
                 </div>
               
               <div className="col">
@@ -22,32 +38,38 @@ const CSVUpload =()=>{
                   </p>
                   <div class="collapse" id="collapseExample">
                     <div class="card card-body">
-                      Input Data
+                      uploading data to database table
                     </div>
                   </div>
                 </div>
       </div>
      
       <div className="mt-2 row">
-      <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th scope="col">Account</th>
-            <th scope="col">ID Number</th>
-          </tr>
-        </thead>
-          <tbody>
-            <tr >
-              ...
-            </tr>
-            <tr>
-              ...
-            </tr>
-            <tr>
-              ...
-            </tr>
-          </tbody>
-        </table>
+        {data.length ? (
+            <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Account</th>
+                <th scope="col">ID Number</th>
+              </tr>
+            </thead>
+              <tbody>
+
+                {data.map((row, index) =>(
+                  <tr key={index}>
+                    <td>{row.Account}</td>
+                    <td>{row.IDNumber}</td>
+                  </tr>
+                ))}
+
+              </tbody>
+              
+            </table>
+
+           
+
+        ): null}
+      
       </div>
     </div>
   )

@@ -6,7 +6,7 @@ import Container from "../Container/container.component";
 
 const Home =()=>{
   return(
-    <div className="container mt-5">
+    <div className="container mt-2">
       <div className="row">
           <div className="text-center bg-dark">
           <img src="./images/inspirit3.png" class="img-fluid " alt="..."/>
@@ -21,7 +21,7 @@ const Home =()=>{
             <Navigation/>
           </div>
           
-          <div className="col-9 border border-dark">
+          <div className="col-9 border-top border-dark">
               <Container/>
           </div>
       </div>
