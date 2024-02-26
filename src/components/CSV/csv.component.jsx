@@ -6,7 +6,8 @@ import { MDBDataTable } from 'mdbreact';
 const CSVUpload =()=>{
 
   const [data, setData] = useState([]);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const handleFileUpload = (e)=>{
     const file = e.target.files[0];
@@ -16,7 +17,16 @@ const CSVUpload =()=>{
         setData(results.data);
       }
     })
-  }
+  };
+
+
+
+
+  
+  // Logic for displaying current items
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   return(
     <div className="">
@@ -27,7 +37,7 @@ const CSVUpload =()=>{
                 </div>
               
               <div className="col">
-                <button class="btn btn-danger  " type="button">Execute</button>
+                <button class="btn btn-danger  " type="button" >Submit</button>
               </div>
 
               <div className="float-end col" >
@@ -62,6 +72,8 @@ const CSVUpload =()=>{
                   </tr>
                 ))}
 
+
+                
               </tbody>
               
             </table>
